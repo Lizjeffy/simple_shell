@@ -81,7 +81,6 @@ int _atoi(char *s)
 	unsigned int count = 0, size = 0, oi = 0;
 	unsigned int i, pn = 1, m = 1;
 
-	i = count - size;
 
 	while (*(s + count) != '\0')
 	{
@@ -100,12 +99,11 @@ int _atoi(char *s)
 		count++;
 	}
 
-	while (i < count)
+	for (i = count - size; i < count; i++)
 	{
 		oi = oi + ((*(s + i) - 48) * m);
 		m /= 10;
 	}
-	i++;
 
 	return (oi * pn);
 }

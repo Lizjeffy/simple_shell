@@ -81,9 +81,7 @@ int error_sep_op(char *input, int i, char last)
  */
 int first_char(char *input, int *i)
 {
-	*i = 0;
-
-	while (input[*i])
+	for (*i = 0; input[*i]; *i += 1)
 	{
 		if (input[*i] == ' ' || input[*i] == '\t')
 			continue;
@@ -93,7 +91,6 @@ int first_char(char *input, int *i)
 
 		break;
 	}
-	i++;
 
 	return (0);
 }
