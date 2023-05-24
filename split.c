@@ -9,7 +9,7 @@
  */
 char *swap_char(char *input, int bool)
 {
-	int x; 
+	int x;
 
 	if (bool == 0)
 	{
