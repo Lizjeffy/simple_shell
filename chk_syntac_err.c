@@ -93,7 +93,7 @@ int first_char(char *input, int *i)
 
 		break;
 	}
-	*i++;
+	i++;
 
 	return (0);
 }
@@ -107,6 +107,7 @@ int first_char(char *input, int *i)
  * @bool: to control msg error
  * Return: no return
  */
+
 void print_syntax_error(data_shell *datash, char *input, int i, int bool)
 {
 	char *msg, *msg2, *msg3, *err, *counter;
@@ -126,9 +127,9 @@ void print_syntax_error(data_shell *datash, char *input, int i, int bool)
 	if (input[i] == '&')
 		msg = (input[i + 1] == '&' ? "&&" : "&");
 
-	msg2 = ": Syntax error: \"";
+	msg2 = ": Syntax err: \"";
 	msg3 = "\" unexpected\n";
-	counter = aux_itoa(datash->counter);
+	counter = muk_itoa(datash->counter);
 	len = _strlen(datash->av[0]) + _strlen(counter);
 	len += _strlen(msg) + _strlen(msg2) + _strlen(msg3) + 2;
 
@@ -146,7 +147,7 @@ void print_syntax_error(data_shell *datash, char *input, int i, int bool)
 	_strcat(err, msg3);
 	_strcat(err, "\0");
 
-	write(STDERR_FILENO, error, len);
+	write(STDERR_FILENO, err, len);
 	free(err);
 	free(counter);
 }

@@ -1,22 +1,24 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <sys/types.h>
+#include <signal.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <limits.h>
 
 #define BUFSIZE 1024
 #define TOK_BUFSIZE 128
 #define TOK_DELIM " \t\r\n\a"
 
 /* Points to an array of pointers to strings called the "environment" */
+
 extern char **environ;
 
 
@@ -30,15 +32,16 @@ extern char **environ;
  * @_environ: environment variable
  * @pid: process ID of the shell
  */
+
 typedef struct data
 {
+	char **_environ;
 	char **av;
+	char *pid;
 	char *input;
 	char **args;
 	int status;
 	int counter;
-	char **_environ;
-	char *pid;
 } data_shell;
 
 /**
@@ -47,6 +50,7 @@ typedef struct data
  * @next: next node
  * Description: single linked list to store separators
  */
+
 typedef struct sep_list_s
 {
 	char separator;
@@ -59,6 +63,7 @@ typedef struct sep_list_s
  * @next: next node
  * Description: single linked list to store command lines
  */
+
 typedef struct line_list_s
 {
 	char *line;
@@ -73,11 +78,12 @@ typedef struct line_list_s
  * @next: next node
  * Description: single linked list to store variables
  */
+
 typedef struct r_var_list
 {
+	int len_val;
 	int len_var;
 	char *val;
-	int len_val;
 	struct r_var_list *next;
 } r_var;
 
@@ -86,6 +92,7 @@ typedef struct r_var_list
  * @name: The name of the command builtin
  * @f: data type pointer function
  */
+
 typedef struct builtin_s
 {
 	char *name;

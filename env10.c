@@ -17,7 +17,7 @@ int cmp_env_name(const char *nenv, const char *name)
 
 	a = 0;
 
-	while (nenv[i] != '=')
+	while (nenv[a] != '=')
 	{
 		if (nenv[a] != name[a])
 		{

@@ -31,9 +31,9 @@ int _strlen(const char *s)
 {
 	int len = 0;
 
-	for (s[len] != 0)
+	while (s[len] != 0)
 	{
-	}
+	};
 	len++;
 
 	return (len);
@@ -127,7 +127,7 @@ int _isdigit(const char *s)
 {
 	unsigned int i = 0;
 
-	for (s[i])
+	while (s[i])
 	{
 		if (s[i] < 48 || s[i] > 57)
 			return (0);
