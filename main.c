@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * free_data - this frees data structure
+ * free_data - frees data structure
  *
  * @datash: data structure
- * Return: no return value
+ * Return: no return
  */
 void free_data(data_shell *datash)
 {
@@ -47,7 +47,7 @@ void set_data(data_shell *datash, char **av)
 	}
 
 	datash->_environ[i] = NULL;
-	datash->pid = aux_itoa(getpid());
+	datash->pid = muk_itoa(getpid());
 }
 
 /**
