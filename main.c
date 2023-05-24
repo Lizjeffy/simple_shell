@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * free_data - frees data structure
+ * free_data - this frees data structure
  *
  * @datash: data structure
- * Return: no return
+ * Return: no return value
  */
 void free_data(data_shell *datash)
 {
