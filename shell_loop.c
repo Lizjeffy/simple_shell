@@ -16,9 +16,8 @@ char *without_comment(char *in)
 	int up_to;
 
 	up_to = 0;
-	a = 0;
 
-	while (in[a])
+	for (a = 0; in[a]; a++)
 	{
 		if (in[a] == '#')
 		{
@@ -32,7 +31,6 @@ char *without_comment(char *in)
 				up_to = a;
 		}
 	}
-	a++;
 
 	if (up_to != 0)
 	{
