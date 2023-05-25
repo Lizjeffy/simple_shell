@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <stdio.h>
-#include <string.h>
 
 /**
  * clear_info - initializes info_t struct

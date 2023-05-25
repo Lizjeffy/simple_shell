@@ -1,7 +1,4 @@
 #include "shell.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 /**
  * get_history_file - gets the history file
