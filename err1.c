@@ -1,21 +1,22 @@
 #include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
  *_eputs - prints an input string
  * @str: the string to be printed
- *
- * Return: Nothing
  */
+
 void _eputs(char *str)
 {
-	int i = 0;
+	int x = 0;
 
 	if (!str)
 		return;
-	while (str[i] != '\0')
+	while (str[x] != '\0')
 	{
-		_eputchar(str[i]);
-		i++;
+		_eputchar(str[x]);
+		x++;
 	}
 }
 
@@ -26,18 +27,19 @@ void _eputs(char *str)
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
+
 int _eputchar(char c)
 {
-	static int i;
+	static int x;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || x >= WRITE_BUF_SIZE)
 	{
-		write(2, buf, i);
-		i = 0;
+		write(2, buf, x);
+		x = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[i++] = c;
+		buf[x++] = c;
 	return (1);
 }
 
@@ -49,18 +51,19 @@ int _eputchar(char c)
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
+
 int _putfd(char c, int fd)
 {
-	static int i;
+	static int x;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || x >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, i);
-		i = 0;
+		write(fd, buf, x);
+		x = 0;
 	}
 	if (c != BUF_FLUSH)
-		buf[i++] = c;
+		buf[x++] = c;
 	return (1);
 }
 
@@ -71,15 +74,16 @@ int _putfd(char c, int fd)
  *
  * Return: the number of chars put
  */
+
 int _putsfd(char *str, int fd)
 {
-	int i = 0;
+	int x = 0;
 
 	if (!str)
 		return (0);
 	while (*str)
 	{
-		i += _putfd(*str++, fd);
+		x += _putfd(*str++, fd);
 	}
-	return (i);
+	return (x);
 }
