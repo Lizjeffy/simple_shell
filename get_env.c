@@ -1,4 +1,7 @@
 #include "shell.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 /**
  * get_environ - returns the string array copy of our environ
@@ -6,6 +9,7 @@
  *          constant function prototype.
  * Return: Always 0
  */
+
 char **get_environ(info_t *info)
 {
 	if (!info->environ || info->env_changed)
@@ -24,10 +28,11 @@ char **get_environ(info_t *info)
  *  Return: 1 on delete, 0 otherwise
  * @var: the string env var property
  */
+
 int _unsetenv(info_t *info, char *var)
 {
 	list_t *node = info->env;
-	size_t i = 0;
+	size_t x = 0;
 	char *p;
 
 	if (!node || !var)
@@ -38,13 +43,13 @@ int _unsetenv(info_t *info, char *var)
 		p = starts_with(node->str, var);
 		if (p && *p == '=')
 		{
-			info->env_changed = delete_node_at_index(&(info->env), i);
-			i = 0;
+			info->env_changed = delete_node_at_index(&(info->env), x);
+			x = 0;
 			node = info->env;
 			continue;
 		}
 		node = node->next;
-		i++;
+		x++;
 	}
 	return (info->env_changed);
 }
@@ -58,11 +63,12 @@ int _unsetenv(info_t *info, char *var)
  * @value: the string env var value
  *  Return: Always 0
  */
+
 int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
 	list_t *node;
-	char *p;
+	char *k;
 
 	if (!var || !value)
 		return (0);
@@ -76,8 +82,8 @@ int _setenv(info_t *info, char *var, char *value)
 	node = info->env;
 	while (node)
 	{
-		p = starts_with(node->str, var);
-		if (p && *p == '=')
+		k = starts_with(node->str, var);
+		if (k && *k == '=')
 		{
 			free(node->str);
 			node->str = buf;
