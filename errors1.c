@@ -132,13 +132,12 @@ char *convert_number(long int num, int base, int flags)
 
 void remove_comments(char *buf)
 {
-	int x = 0;
+	int x;
 
-	while (buf[x] != '\0')
+	for (x = 0; buf[x] != '\0'; x++)
 		if (buf[x] == '#' && (!x || buf[x - 1] == ' '))
 		{
 			buf[x] = '\0';
 			break;
 		}
-	x++;
 }

@@ -65,7 +65,7 @@ int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
 	list_t *node;
-	char *k;
+	char *p;
 
 	if (!var || !value)
 		return (0);
@@ -79,8 +79,8 @@ int _setenv(info_t *info, char *var, char *value)
 	node = info->env;
 	while (node)
 	{
-		k = starts_with(node->str, var);
-		if (k && *k == '=')
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
 		{
 			free(node->str);
 			node->str = buf;
