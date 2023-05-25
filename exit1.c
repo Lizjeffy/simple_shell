@@ -1,6 +1,5 @@
 #include "shell.h"
 #include <stdio.h>
-#include <stdlib.h.>
 
 /**
  **_strncpy - copies a string

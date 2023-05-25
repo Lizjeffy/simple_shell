@@ -69,7 +69,7 @@ ssize_t get_input(info_t *info)
 	if (len)	/* we have commands left in the chain buffer */
 	{
 		y = x; /* init new iterator to current buf position */
-		p = buf + i; /* get pointer for return */
+		r = buf + x;
 
 		check_chain(info, buf, &y, x, len);
 		while (y < len)
@@ -149,9 +149,9 @@ int _getline(info_t *info, char **ptr, size_t *length)
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + x, k - i);
+		_strncat(new_p, buf + x, k - x);
 	else
-		_strncpy(new_p, buf + x, k - i + 1);
+		_strncpy(new_p, buf + x, k - x + 1);
 
 	s += k - x;
 	x = k;
