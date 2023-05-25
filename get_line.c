@@ -1,14 +1,10 @@
 #include "shell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 /**
  * input_buf - buffers chained commands
  * @info: parameter struct
  * @buf: address of buffer
  * @len: address of len var
- *
  * Return: bytes read
  */
 
@@ -17,9 +13,8 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 	ssize_t k = 0;
 	size_t len_p = 0;
 
-	if (!*len) /* if nothing left in the buffer, fill it */
+	if (!*len)
 	{
-		/*bfree((void **)info->cmd_buf);*/
 		free(*buf);
 		*buf = NULL;
 		signal(SIGINT, sigintHandler);
@@ -38,7 +33,6 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 			info->linecount_flag = 1;
 			remove_comments(*buf);
 			build_history_list(info, *buf, info->histcount++);
-			/* if (_strchr(*buf, ';')) is this a command chain? */
 			{
 				*len = k;
 				info->cmd_buf = buf;
@@ -68,8 +62,8 @@ ssize_t get_input(info_t *info)
 		return (-1);
 	if (len)	/* we have commands left in the chain buffer */
 	{
-		y = x; /* init new iterator to current buf position */
-		r = buf + x;
+		y = x;
+		p = buf + x;
 
 		check_chain(info, buf, &y, x, len);
 		while (y < len)
@@ -79,15 +73,15 @@ ssize_t get_input(info_t *info)
 			y++;
 		}
 
-		x = y + 1;
-		if (x >= len)
+		x = y + 1; /* increment past nulled ';'' */
+		if (x >= len) /* reached end of buffer? */
 		{
-			x = len = 0;
+			x = len = 0; /* reset position and length */
 			info->cmd_buf_type = CMD_NORM;
 		}
 
-		*buf_p = p;
-		return (_strlen(p));
+		*buf_p = p; /* pass back pointer to current command position */
+		return (_strlen(p)); /* return length of current command */
 	}
 
 	*buf_p = buf;
@@ -105,14 +99,14 @@ ssize_t get_input(info_t *info)
 
 ssize_t read_buf(info_t *info, char *buf, size_t *i)
 {
-	ssize_t k = 0;
+	ssize_t r = 0;
 
 	if (*i)
 		return (0);
-	k = read(info->readfd, buf, READ_BUF_SIZE);
-	if (k >= 0)
-		*i = k;
-	return (k);
+	r = read(info->readfd, buf, READ_BUF_SIZE);
+	if (r >= 0)
+		*i = r;
+	return (r);
 }
 
 /**
@@ -127,7 +121,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 int _getline(info_t *info, char **ptr, size_t *length)
 {
 	static char buf[READ_BUF_SIZE];
-	static size_t x, len;
+	static size_t i, len;
 	size_t k;
 	ssize_t r = 0, s = 0;
 	char *p = NULL, *new_p = NULL, *c;
@@ -135,26 +129,26 @@ int _getline(info_t *info, char **ptr, size_t *length)
 	p = *ptr;
 	if (p && length)
 		s = *length;
-	if (x == len)
-		x = len = 0;
+	if (i == len)
+		i = len = 0;
 
 	r = read_buf(info, buf, &len);
 	if (r == -1 || (r == 0 && len == 0))
 		return (-1);
 
-	c = _strchr(buf + x, '\n');
+	c = _strchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
 	new_p = _realloc(p, s, s ? s + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 		return (p ? free(p), -1 : -1);
 
 	if (s)
-		_strncat(new_p, buf + x, k - x);
+		_strncat(new_p, buf + i, k - i);
 	else
-		_strncpy(new_p, buf + x, k - x + 1);
+		_strncpy(new_p, buf + i, k - i + 1);
 
-	s += k - x;
-	x = k;
+	s += k - i;
+	i = k;
 	p = new_p;
 
 	if (length)
